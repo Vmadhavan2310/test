@@ -1,22 +1,24 @@
-name: Deployment Setup
+name: Shopify Theme Pipeline
 
 on: push
 
-env: 
-  theme_id: 188771827987
-
 jobs: 
-  deploy: 
+  ES Lint: 
     runs-on: ubuntu-latest
 
     steps: 
-      - name: print single line
-        run: echo ${{secrets.THEME_ID}}
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Check secrets
-        run: | 
-          if [ "${{secrets.THEME_ID}}" == $theme_id ]; then
-            echo "Theme ID Matched"
-          else
-            echo "not Exists"  
-          fi 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 22
+
+      - name: Install Dependencies
+        uses: npm ci
+
+      - name: Run ESLINT
+        uses: npm run lint      
+
+
