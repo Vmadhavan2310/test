@@ -8,4 +8,4 @@ jobs:
 
     steps: 
       - name: print single line
-      echo 'Just Checking'
+        run: echo 'Just Checking'
