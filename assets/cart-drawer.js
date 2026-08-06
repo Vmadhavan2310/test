@@ -22,7 +22,6 @@ class CartDrawer extends HTMLElement {
       }
     });
   }
-console.log('DEV BRANCH');
   open(triggeredBy) {
     if (triggeredBy) this.setActiveElement(triggeredBy);
     const cartDrawerNote = this.querySelector('[id^="Details-"] summary');

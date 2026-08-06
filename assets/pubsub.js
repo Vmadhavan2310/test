@@ -1,6 +1,8 @@
+/* exported subscribe, publish */
+
 let subscribers = {}
 
-function subscribe(eventName, callback) {
+window.subscribe = function(eventName, callback) {
   if (subscribers[eventName] === undefined) {
     subscribers[eventName] = []
   }
@@ -14,7 +16,7 @@ function subscribe(eventName, callback) {
   }
 };
 
-function publish(eventName, data) {
+window.publish = function(eventName, data) {
   if (subscribers[eventName]) {
     subscribers[eventName].forEach((callback) => {
       callback(data)
