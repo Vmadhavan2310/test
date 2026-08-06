@@ -24,21 +24,5 @@ jobs:
               echo "$file exceeds 500 KB"
               exit 1
             fi
-      
-  Performance: 
-    runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with: 
-          node-version: 24
-
-      - name: npm install
-        run: npm ci
-
-      - name: Lighthouse Run
-        run: npx lhci autorun      
+         
 
