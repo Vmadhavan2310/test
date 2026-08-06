@@ -13,10 +13,28 @@ jobs:
     steps: 
         - name: Checkout repository
           uses: actions/checkout@v4
+          with: 
+            ref: main
 
         - name: Install Shopify CLI
           run: npm install -g @shopify/cli @shopify/theme
 
         - name: Delete Theme  
           run: echo "Deleting theme command"
+          id: find_theme
+          run: |
+            THEME_ID=$(shopify theme list --json \
+              | jq -r --arg NAME "feature-$THEME_NAME" '.[] | select(.name==$NAME) | .id' \
+            )
+
+            if [ -z "$THEME_ID" ] || [ "$THEME_ID" = "null" ]; then
+              echo "Theme not found"
+            else
+              echo "Theme found: $THEME_ID"
+              echo "theme_id=$THEME_ID" >> "$GITHUB_OUTPUT"
+              shopify theme delete --theme $THEME_ID --force
+            fi
+
+            echo "Found theme id: $THEME_ID"
+            echo "theme_id=$THEME_ID" >> "$GITHUB_OUTPUT"  
 
