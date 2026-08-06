@@ -500,7 +500,7 @@
       document.querySelector('variant-radios[data-section="{{ section.id }}"]') ||
       document.querySelector('variant-selects[data-section="{{ section.id }}"]');
     noScriptInputWrapper.innerHTML = document.querySelector(
-      '.product-form__noscript-wrapper-{{ section.id }}'
+      '.product-form__noscript-wrapper-{{ section.id }}',
     ).textContent;
     variantSwitcher.outerHTML = noScriptInputWrapper.outerHTML;
 

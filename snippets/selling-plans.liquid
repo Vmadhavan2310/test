@@ -24,7 +24,7 @@
       -%}
 
       <div>
-        {%-  if forloop.first -%}
+        {%- if forloop.first -%}
           <div>
             <input
               type="radio"
@@ -34,61 +34,62 @@
               class="absolute left-0 -translate-y-1/2 top-1/2"
               checked
             >
-            <label for="selling_group_{{- group.id -}}_onetime"
-              >{{- 'products.product.selling_plans.one_time_purchase' | t }}{{ plan_allocation.compare_at_price | money -}}
+            <label for="selling_group_{{- group.id -}}_onetime">
+              {{- 'products.product.selling_plans.one_time_purchase' | t -}}
+              {{- plan_allocation.compare_at_price | money -}}
             </label>
           </div>
         {%- endif -%}
 
         {%- for selling_plan in group.selling_plans -%}
           {%- if selling_plan.id -%}
-          {%- unless percentage_amount == false %}
-            <div class="relative flex flex-wrap pl-6">
-              <input
-                type="radio"
-                name="purchase_option"
-                id="selling_group_{{- group.id -}}_subscription"
-                value="{{ selling_plan.id }}"
-              >
-    
-              <label for="selling_group_{{- group.id -}}_subscription">
-                {{ group.name }}
-                {{ plan_allocation.price | money }}
-                {%- unless percentage_amount == 0 -%}
-                  <span style="font-size: 14px;">(Save {{ percentage_amount }}%)</span>
-                {%- endunless -%}
-              </label>
-    
-              <div class="hidden w-full pt-2 peer-checked:block">
-                <div class="relative inline-block border-b border-gray-700 border-solid">
-                  <select
-                    name="purchase_option_values"
-                    id="selling_group_{{- group.id -}}_options"
-                    class="pr-4 text-sm bg-transparent appearance-none"
-                  >
-                    {%- for plan in group.selling_plans -%}
-                      <option
-                        value="{{- plan.id -}}"
-                        {% if forloop.first %}
-                          selected
-                        {% endif %}
-                      >
-                        {{- plan.name -}}
-                      </option>
-                    {%- endfor -%}
-                  </select>
-    
-                  <svg
-                    class="absolute right-0 w-2.5 -translate-y-1/2 top-1/2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                  >
-                    <g fill="currentColor"><path d="M14.769,5.36a1,1,0,0,0-1.41-.128L8,9.7,2.641,5.232A1,1,0,1,0,1.359,6.768l6,5a1,1,0,0,0,1.282,0l6-5A1,1,0,0,0,14.769,5.36Z"></path></g>
-                  </svg>
+            {%- unless percentage_amount == false %}
+              <div class="relative flex flex-wrap pl-6">
+                <input
+                  type="radio"
+                  name="purchase_option"
+                  id="selling_group_{{- group.id -}}_subscription"
+                  value="{{ selling_plan.id }}"
+                >
+
+                <label for="selling_group_{{- group.id -}}_subscription">
+                  {{ group.name }}
+                  {{ plan_allocation.price | money }}
+                  {%- unless percentage_amount == 0 -%}
+                    <span style="font-size: 14px;">(Save {{ percentage_amount }}%)</span>
+                  {%- endunless -%}
+                </label>
+
+                <div class="hidden w-full pt-2 peer-checked:block">
+                  <div class="relative inline-block border-b border-gray-700 border-solid">
+                    <select
+                      name="purchase_option_values"
+                      id="selling_group_{{- group.id -}}_options"
+                      class="pr-4 text-sm bg-transparent appearance-none"
+                    >
+                      {%- for plan in group.selling_plans -%}
+                        <option
+                          value="{{- plan.id -}}"
+                          {% if forloop.first %}
+                            selected
+                          {% endif %}
+                        >
+                          {{- plan.name -}}
+                        </option>
+                      {%- endfor -%}
+                    </select>
+
+                    <svg
+                      class="absolute right-0 w-2.5 -translate-y-1/2 top-1/2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                    >
+                      <g fill="currentColor"><path d="M14.769,5.36a1,1,0,0,0-1.41-.128L8,9.7,2.641,5.232A1,1,0,1,0,1.359,6.768l6,5a1,1,0,0,0,1.282,0l6-5A1,1,0,0,0,14.769,5.36Z"></path></g>
+                    </svg>
+                  </div>
                 </div>
               </div>
-            </div>
-          {%- endunless -%}
+            {%- endunless -%}
           {%- endif -%}
         {%- endfor -%}
       </div>
