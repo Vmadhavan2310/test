@@ -5,7 +5,7 @@ on: push
 env: 
   SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
   SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
-  THEME_NAME: ${GITHUB_REF_NAME}
+  THEME_NAME: ${{GITHUB_REF_NAME}}
 
 jobs: 
   ES_lint: 
@@ -48,7 +48,7 @@ jobs:
         run: npm install -g @shopify/cli @shopify/theme  
 
       - name: Create Preview Theme
-        run: shopify theme push --unpublished --theme "feature-${{THEME_NAME}}"
+        run: shopify theme push --unpublished --theme "feature-$THEME_NAME"
 
 
 
