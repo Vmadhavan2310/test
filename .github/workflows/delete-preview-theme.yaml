@@ -1,0 +1,22 @@
+name: Delete Preview Theme
+
+on: delete
+
+env: 
+  SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
+  SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+  THEME_NAME: ${{ github.ref_name }}
+
+jobs: 
+  theme_delete:
+    runs-on: ubuntu-latest
+    steps: 
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - name: Install Shopify CLI
+          run: npm install -g @shopify/cli @shopify/theme
+
+        - name: Delete Theme  
+          run: echo "Deleting theme command"
+

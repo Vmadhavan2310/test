@@ -295,10 +295,10 @@ Shopify.CountryProvinceSelector.prototype = {
       this.provinceContainer.style.display = 'none';
     } else {
       for (var i = 0; i < provinces.length; i++) {
-        var opt = document.createElement('option');
-        opt.value = provinces[i][0];
-        opt.innerHTML = provinces[i][1];
-        this.provinceEl.appendChild(opt);
+        var optionEl = document.createElement('option');
+        optionEl.value = provinces[i][0];
+        optionEl.innerHTML = provinces[i][1];
+        this.provinceEl.appendChild(optionEl);
       }
 
       this.provinceContainer.style.display = "";
