@@ -28,7 +28,7 @@ jobs:
 
   ES_lint: 
     runs-on: ubuntu-latest
-
+    needs: Prettier
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v4
