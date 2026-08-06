@@ -20,5 +20,10 @@ jobs:
 
       - name: Run ES_lint
         run: npm run lint      
+  
+  Theme_Check: 
+    steps: 
+      - name: Shopify theme Check
+        run: npm run theme:check
 
 
