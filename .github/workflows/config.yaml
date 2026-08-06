@@ -8,4 +8,4 @@ jobs:
 
     steps: 
       - name: print single line
-        run: echo 'Just Checking'
+        run: echo ${{secrets.msg}}
