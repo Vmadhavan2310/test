@@ -55,15 +55,24 @@ jobs:
           )
 
           if [ -z "$THEME_ID" ] || [ "$THEME_ID" = "null" ]; then
-            echo "Theme 'feature-$THEME_NAME' not found"
-            exit 1
+            echo "Theme not found"
+            echo "theme_id=" >> "$GITHUB_OUTPUT"
+          else
+            echo "Theme found: $THEME_ID"
+            echo "theme_id=$THEME_ID" >> "$GITHUB_OUTPUT"
           fi
 
           echo "Found theme id: $THEME_ID"
           echo "theme_id=$THEME_ID" >> "$GITHUB_OUTPUT"         
 
       - name: Create Preview Theme
-        run: shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json
+        
+        run: |
+          if [-z "${{ steps.find_theme.outputs.theme_id }}" ]; then
+            shopify theme push --unpublished --theme "feature-$THEME_NAME"
+          else 
+            shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json
+          fi  
 
 
 
