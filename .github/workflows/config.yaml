@@ -5,16 +5,15 @@ on: push
 jobs: 
   deploy: 
     runs-on: ubuntu-latest
-    environment: test 
 
     steps: 
       - name: print single line
-        run: echo ${{secrets.MSG}}
+        run: echo ${{secrets.THEME_ID}}
 
       - name: Check secrets
         run: | 
-          if [ "${{secrets.MSG}}" == "vinoth" ]; then
-            echo "Secret Matched"
+          if [ "${{secrets.THEME_ID}}" == "188771827987" ]; then
+            echo "Theme ID Matched"
           else
-            echo "Secrets not Exists"  
+            echo "not Exists"  
           fi 
