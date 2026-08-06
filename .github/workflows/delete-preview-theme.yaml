@@ -5,7 +5,7 @@ on: delete
 env: 
   SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
   SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
-  THEME_NAME: ${{ github.ref_name }}
+  THEME_NAME: ${{ github.event.ref }}
 
 jobs: 
   theme_delete:
