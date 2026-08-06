@@ -46,9 +46,7 @@ jobs:
         run: npm install -g @shopify/cli @shopify/theme  
 
       - name: Create Preview Theme
-        run: shopify theme push \
-          --unpublished \
-          --theme "Feature-theme"
+        run: shopify theme push --unpublished --theme "Feature-theme"
 
 
 
