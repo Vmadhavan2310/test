@@ -10,6 +10,21 @@ env:
   THEME_NAME: ${{ github.ref_name }}
 
 jobs:  
+  Optimized:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Check JavaScript size
+        run: |
+          LIMIT=500000   # 500 KB
+
+          find assets -name "*.js" | while read file; do
+            SIZE=$(wc -c < "$file")
+
+            if [ "$SIZE" -gt "$LIMIT" ]; then
+              echo "$file exceeds 500 KB"
+              exit 1
+            fi
+      
   Performance: 
     runs-on: ubuntu-latest
     steps: 
