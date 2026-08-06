@@ -1,0 +1,11 @@
+name: Deployment Setup
+
+on: push
+
+jobs: 
+  deploy: 
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: print single line
+      echo 'Just Checking'
