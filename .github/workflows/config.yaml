@@ -9,11 +9,11 @@ jobs:
 
     steps: 
       - name: print single line
-        run: echo ${{secrets.msg}}
-        
+        run: echo ${{secrets.MSG}}
+
       - name: Check secrets
         run: | 
-          if [ "${{secrets.msg}}" == "vinoth"]; then
+          if [ "${{secrets.MSG}}" == "vinoth"]; then
             echo "Secret Matched"
           else
             echo "Secrets not Exists"  
