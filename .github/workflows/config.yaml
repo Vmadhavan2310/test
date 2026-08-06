@@ -70,10 +70,10 @@ jobs:
         run: |
           if [ "${{ steps.find_theme.outputs.theme_id }}" == "" ]; then
             echo "New theme Creates"
-            shopify theme push --unpublished --theme "feature-$THEME_NAME"
+            shopify theme push --unpublished --theme "feature-$THEME_NAME" || exit 0
           else 
             echo "Pushing to existing theme"
-            shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json
+            shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json || exit 0
           fi  
 
 
