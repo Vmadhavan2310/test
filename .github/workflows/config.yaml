@@ -13,7 +13,7 @@ jobs:
 
       - name: Check secrets
         run: | 
-          if [ "${{secrets.MSG}}" != ""]; then
+          if [ "${{secrets.MSG}}" != "" ]; then
             echo "Secret Matched"
           else
             echo "Secrets not Exists"  
