@@ -12,7 +12,7 @@ jobs:
 
       - name: Check secrets
         run: | 
-          if [ "${{secrets.THEME_ID}}" == "188771827987" ]; then
+          if [ "${{secrets.THEME_ID}}" == "18877182798" ]; then
             echo "Theme ID Matched"
           else
             echo "not Exists"  
