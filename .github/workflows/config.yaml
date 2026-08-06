@@ -1,7 +1,9 @@
 name: Shopify Theme Pipeline
 
-on: push
-
+on: 
+  push: 
+    branches-ignore:
+      - main
 env: 
   SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
   SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
