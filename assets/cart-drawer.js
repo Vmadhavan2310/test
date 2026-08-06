@@ -22,7 +22,6 @@ class CartDrawer extends HTMLElement {
       }
     });
   }
-  console.log(kljkjkl)
   open(triggeredBy) {
     if (triggeredBy) this.setActiveElement(triggeredBy);
     const cartDrawerNote = this.querySelector('[id^="Details-"] summary');
