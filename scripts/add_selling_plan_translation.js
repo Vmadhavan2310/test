@@ -1,10 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const localesDir = path.join(__dirname, '..', 'locales');
 const files = fs.readdirSync(localesDir).filter(f => f.endsWith('.json') && !f.endsWith('.schema.json'));
 
-files.forEach((file) => {
+for (const file of files) {
   const full = path.join(localesDir, file);
   let raw = fs.readFileSync(full, 'utf8');
 
@@ -27,5 +29,5 @@ files.forEach((file) => {
   } catch (e) {
     console.error(`Failed to parse ${file}: ${e.message}`);
   }
-});
+}
 console.log('Done');
