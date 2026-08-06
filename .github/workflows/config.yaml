@@ -20,7 +20,8 @@ jobs:
 
       - name: Run ES_lint
         run: npm run lint      
-  
+
+jobs:  
   Theme_Check: 
     runs-on: ubuntu-latest
 
