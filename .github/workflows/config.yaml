@@ -23,8 +23,8 @@ jobs:
 
   Theme_Check: 
     runs-on: ubuntu-latest
-    steps: 
     needs: ES_lint
+    steps: 
       - name: Checkout repository
         uses: actions/checkout@v4
 
