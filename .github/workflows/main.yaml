@@ -1,0 +1,45 @@
+name: Shopify Theme Pipeline
+
+on: 
+  push: 
+    branches:
+      - main
+env: 
+  SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
+  SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+
+jobs: 
+  ES_lint: 
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 24
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ES_lint
+        run: npm run lint      
+
+  Theme_Check: 
+    runs-on: ubuntu-latest
+    needs: ES_lint
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme  
+
+      - name: Shopify theme Check
+        run: npm run theme:check
+ 
+
+
+
