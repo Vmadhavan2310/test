@@ -9,23 +9,22 @@ env:
   SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
 
 jobs:
-
   Prettier: 
-  runs-on: ubuntu-latest
-  steps: 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with: 
-        node-version: 24
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 24
 
-    - name: Install Dependencies
-      run: npm ci
+      - name: Install Dependencies
+        run: npm ci
 
-    - name: Run Prettier Formatting
-      run: npx prettier "**/*.liquid" --write 
+      - name: Run Prettier Formatting
+        run: npx prettier "**/*.liquid" --write 
 
   ES_lint: 
     runs-on: ubuntu-latest
