@@ -69,12 +69,21 @@ jobs:
         
         run: |
           if [ "${{ steps.find_theme.outputs.theme_id }}" == "" ]; then
-            echo "New theme Creates"
-            shopify theme push --unpublished --theme "feature-$THEME_NAME" || exit 1
-          else 
+            echo "New theme creates"
+            OUTPUT=$(shopify theme push --unpublished --theme "feature-$THEME_NAME" --json)
+          else
             echo "Pushing to existing theme"
-            shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json || exit 1
-          fi  
+            OUTPUT=$(shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json)
+          fi
+
+          echo "$OUTPUT"
+
+          # Fail the step if Shopify reports theme errors in the JSON output
+          if echo "$OUTPUT" | jq -e '.errors' > /dev/null 2>&1; then
+            echo "::error::Theme pushed with Liquid/theme errors — failing the build"
+            echo "$OUTPUT" | jq '.errors'
+            exit 1
+          fi
 
 
 
