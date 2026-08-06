@@ -3,7 +3,7 @@ name: Shopify Theme Pipeline
 on: push
 
 jobs: 
-  ES Lint: 
+  ES_lint: 
     runs-on: ubuntu-latest
 
     steps: 
@@ -18,7 +18,7 @@ jobs:
       - name: Install Dependencies
         uses: npm ci
 
-      - name: Run ESLINT
+      - name: Run ES_lint
         uses: npm run lint      
 
 
