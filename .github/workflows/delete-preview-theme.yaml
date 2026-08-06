@@ -20,7 +20,6 @@ jobs:
           run: npm install -g @shopify/cli @shopify/theme
 
         - name: Delete Theme  
-          run: echo "Deleting theme command"
           id: find_theme
           run: |
             THEME_ID=$(shopify theme list --json \
