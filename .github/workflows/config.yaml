@@ -51,11 +51,11 @@ jobs:
         id: find_theme
         run: |
           THEME_ID=$(shopify theme list --json \
-            | jq -r --arg NAME "$THEME_NAME" '.[] | select(.name==$NAME) | .id' \
+            | jq -r --arg NAME "feature-$THEME_NAME" '.[] | select(.name==$NAME) | .id' \
           )
 
           if [ -z "$THEME_ID" ] || [ "$THEME_ID" = "null" ]; then
-            echo "Theme '$THEME_NAME' not found"
+            echo "Theme 'feature-$THEME_NAME' not found"
             exit 1
           fi
 
