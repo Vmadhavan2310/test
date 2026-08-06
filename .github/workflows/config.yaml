@@ -5,6 +5,7 @@ on: push
 jobs: 
   deploy: 
     runs-on: ubuntu-latest
+    environment: test 
 
     steps: 
       - name: print single line
