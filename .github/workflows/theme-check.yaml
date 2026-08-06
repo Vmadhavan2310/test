@@ -1,0 +1,21 @@
+name: Shopify Theme Check
+
+on:
+  push:
+
+jobs:
+  theme-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Theme Check
+        run: npm run theme:check
