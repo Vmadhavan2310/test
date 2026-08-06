@@ -11,8 +11,10 @@ jobs:
         run: echo ${{secrets.THEME_ID}}
 
       - name: Check secrets
+        env: 
+          theme_id: 188771827987
         run: | 
-          if [ "${{secrets.THEME_ID}}" == "18877182798" ]; then
+          if [ "${{secrets.THEME_ID}}" == $theme_id ]; then
             echo "Theme ID Matched"
           else
             echo "not Exists"  
