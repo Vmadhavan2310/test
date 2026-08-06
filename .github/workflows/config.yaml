@@ -16,9 +16,9 @@ jobs:
           node-version: 22
 
       - name: Install Dependencies
-        uses: npm ci
+        run: npm ci
 
       - name: Run ES_lint
-        uses: npm run lint      
+        run: npm run lint      
 
 
