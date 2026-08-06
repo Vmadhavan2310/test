@@ -63,7 +63,7 @@ jobs:
           echo "theme_id=$THEME_ID" >> "$GITHUB_OUTPUT"         
 
       - name: Create Preview Theme
-        run: shopify theme push --unpublished --theme "feature-$THEME_NAME"
+        run: shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json
 
 
 
