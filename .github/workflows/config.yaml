@@ -1,29 +1,30 @@
 name: Shopify Theme Pipeline
 
-on: 
-  push: 
+on:
+  push:
     branches-ignore:
       - main
-env: 
-  SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
-  SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
-  THEME_NAME: ${{ github.ref_name }}
 
-jobs:  
+jobs:
   Optimized:
     runs-on: ubuntu-latest
-    steps: 
+
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Check JavaScript size
         run: |
-          LIMIT=500000   # 500 KB
+          LIMIT=500000
 
           find assets -name "*.js" | while read file; do
             SIZE=$(wc -c < "$file")
+
+            echo "$file : $SIZE"
 
             if [ "$SIZE" -gt "$LIMIT" ]; then
               echo "$file exceeds 500 KB"
               exit 1
             fi
-          done  
-         
+          done
 
+          echo "Done"
