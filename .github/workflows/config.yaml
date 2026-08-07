@@ -14,7 +14,7 @@ jobs:
 
       - name: Check JavaScript size
         run: |
-          LIMIT=500000
+          LIMIT=4000
 
           find assets -name "*.js" | while read file; do
             SIZE=$(wc -c < "$file")
