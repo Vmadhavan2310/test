@@ -62,7 +62,10 @@ jobs:
     needs: Theme_Check
     runs-on: ubuntu-latest
     steps: 
-      - name: Validate JavaScript size
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check JavaScript size
         run: |
           LIMIT=4000
 
@@ -72,10 +75,10 @@ jobs:
             echo "$file : $SIZE"
 
             if [ "$SIZE" -gt "$LIMIT" ]; then
-              echo "$file exceeds 500 KB"
+              echo "$file exceeds ${LIMIT} bytes"
               exit 1
             fi
-          done 
+          done
 
   Shopify_theme_push: 
     runs-on: ubuntu-latest
