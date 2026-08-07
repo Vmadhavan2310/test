@@ -59,45 +59,45 @@ jobs:
         run: npm run theme:check
 
   JSFileSize: 
-  needs: Theme_Check
-  runs-on: unbuntu-latest
-  steps: 
-    - name: Validate JavaScript size
-      run: |
-        FILE_LIMIT=$((200 * 1024))    # 200 KB
-        TOTAL_LIMIT=$((400 * 1024))   # 400 KB
+    needs: Theme_Check
+    runs-on: unbuntu-latest
+    steps: 
+      - name: Validate JavaScript size
+        run: |
+          FILE_LIMIT=$((200 * 1024))    # 200 KB
+          TOTAL_LIMIT=$((400 * 1024))   # 400 KB
 
-        TOTAL_SIZE=0
-        FAILED=0
+          TOTAL_SIZE=0
+          FAILED=0
 
-        while IFS= read -r file; do
-          SIZE=$(wc -c < "$file")
-          TOTAL_SIZE=$((TOTAL_SIZE + SIZE))
+          while IFS= read -r file; do
+            SIZE=$(wc -c < "$file")
+            TOTAL_SIZE=$((TOTAL_SIZE + SIZE))
 
-          echo "$file : $SIZE bytes"
+            echo "$file : $SIZE bytes"
 
-          if [ "$SIZE" -gt "$FILE_LIMIT" ]; then
-            echo "❌ $file exceeds individual limit (200 KB)"
+            if [ "$SIZE" -gt "$FILE_LIMIT" ]; then
+              echo "❌ $file exceeds individual limit (200 KB)"
+              FAILED=1
+            fi
+          done < <(find assets -type f -name "*.js")
+
+          echo ""
+          echo "Total JavaScript Size: $TOTAL_SIZE bytes"
+
+          if [ "$TOTAL_SIZE" -gt "$TOTAL_LIMIT" ]; then
+            echo "❌ Total JavaScript size exceeds 400 KB"
             FAILED=1
           fi
-        done < <(find assets -type f -name "*.js")
 
-        echo ""
-        echo "Total JavaScript Size: $TOTAL_SIZE bytes"
+          if [ "$FAILED" -eq 1 ]; then
+            echo ""
+            echo "🚫 JavaScript size validation failed."
+            exit 1
+          fi
 
-        if [ "$TOTAL_SIZE" -gt "$TOTAL_LIMIT" ]; then
-          echo "❌ Total JavaScript size exceeds 400 KB"
-          FAILED=1
-        fi
-
-        if [ "$FAILED" -eq 1 ]; then
           echo ""
-          echo "🚫 JavaScript size validation failed."
-          exit 1
-        fi
-
-        echo ""
-        echo "✅ JavaScript size validation passed."      
+          echo "✅ JavaScript size validation passed."      
 
   Shopify_theme_push: 
     runs-on: ubuntu-latest
