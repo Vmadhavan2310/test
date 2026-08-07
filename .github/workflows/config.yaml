@@ -12,19 +12,39 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check JavaScript size
+      - name: Validate JavaScript size
         run: |
-          LIMIT=4000
+          FILE_LIMIT=$((200 * 1024))    # 200 KB
+          TOTAL_LIMIT=$((400 * 1024))   # 400 KB
 
-          find assets -name "*.js" | while read file; do
+          TOTAL_SIZE=0
+          FAILED=0
+
+          while IFS= read -r file; do
             SIZE=$(wc -c < "$file")
+            TOTAL_SIZE=$((TOTAL_SIZE + SIZE))
 
-            echo "$file : $SIZE"
+            echo "$file : $SIZE bytes"
 
-            if [ "$SIZE" -gt "$LIMIT" ]; then
-              echo "$file exceeds 500 KB"
-              exit 1
+            if [ "$SIZE" -gt "$FILE_LIMIT" ]; then
+              echo "❌ $file exceeds individual limit (200 KB)"
+              FAILED=1
             fi
-          done
+          done < <(find assets -type f -name "*.js")
 
-          echo "Done"
+          echo ""
+          echo "Total JavaScript Size: $TOTAL_SIZE bytes"
+
+          if [ "$TOTAL_SIZE" -gt "$TOTAL_LIMIT" ]; then
+            echo "❌ Total JavaScript size exceeds 400 KB"
+            FAILED=1
+          fi
+
+          if [ "$FAILED" -eq 1 ]; then
+            echo ""
+            echo "🚫 JavaScript size validation failed."
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ JavaScript size validation passed."
