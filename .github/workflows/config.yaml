@@ -60,7 +60,7 @@ jobs:
 
   JSFileSize: 
     needs: Theme_Check
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
     steps: 
       - name: Validate JavaScript size
         run: |
