@@ -69,15 +69,13 @@ jobs:
           find assets -name "*.js" | while read file; do
             SIZE=$(wc -c < "$file")
 
-            echo "$file : $SIZE bytes"
+            echo "$file : $SIZE"
 
             if [ "$SIZE" -gt "$LIMIT" ]; then
-              echo "$file exceeds ${LIMIT} bytes"
+              echo "$file exceeds 500 KB"
               exit 1
             fi
-          done
-
-          echo "All JavaScript files are within the size limit."  
+          done 
 
   Shopify_theme_push: 
     runs-on: ubuntu-latest
