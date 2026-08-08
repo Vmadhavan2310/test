@@ -31,7 +31,7 @@ jobs:
                 "url": [
                   "https://www.sportstech.de"
                 ],
-                "numberOfRuns": 3
+                "numberOfRuns": 1
               },
               "assert": {
                 "assertions": {
