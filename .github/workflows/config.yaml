@@ -64,6 +64,24 @@ jobs:
         with:
           node-version: 22
 
-      - run: echo "lighthouse tets ${{ secrets.SHOPIFY_STORE }}"
+      - run: npm ci
+
+      - name: Create Lighthouse config
+        run: |
+          cat > .lighthouserc.json <<EOF
+          {
+            "ci": {
+              "collect": {
+                "url": [
+                  "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
+                ],
+                "numberOfRuns": 3
+              }
+            }
+          }
+          EOF
+
+      - name: Run Lighthouse
+        run: npx lhci autorun
 
 
