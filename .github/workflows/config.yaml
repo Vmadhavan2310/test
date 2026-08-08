@@ -25,7 +25,6 @@ jobs:
         id: find_theme
         run: |
           THEME_ID=$(shopify theme list --json \
-
             | jq -r --arg NAME "$THEME_NAME" '.[] | select(.name==$NAME) | .id' \
           )
 
@@ -57,7 +56,6 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     needs: Shopify_theme_push
-    # REMOVED the faulty job-level env mapping from here
     steps:
       - uses: actions/checkout@v4
 
@@ -66,7 +64,8 @@ jobs:
           node-version: 22
 
       - name: Run Lighthouse Audit
-        # FIXED: Declared at the step-level where 'env' syntax evaluation is fully supported
         env: 
-          preview_url: "${{ env.SHOPIFY_FLAG_STORE }}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
-        run: echo "url:$preview_url"
+         preview_url: "${{ env.SHOPIFY_FLAG_STORE }}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"  
+      - run: echo "url:$preview_url"
+
+
