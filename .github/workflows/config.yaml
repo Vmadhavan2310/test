@@ -67,17 +67,34 @@ jobs:
       - run: npm ci
       ## "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
       - name: Create Lighthouse config
+        env:
+          PREVIEW_THEME_ID: ${{ steps.theme_push.outputs.theme_id }}
         run: |
           cat > .lighthouserc.json <<EOF
           {
             "ci": {
               "collect": {
                 "url": [
-                  "https://www.sportstech.de/?preview_theme_id=204340461910",
-                  "https://www.sportstech.de/products/stread-pro-laufband?preview_theme_id=204340461910",
-                  "https://www.sportstech.de/collections/sale?preview_theme_id=204340461910"
+                  "https://www.sportstech.de",
                 ],
                 "numberOfRuns": 3
+              },
+              "assert": {
+                "preset": "lighthouse:no-pwa",
+                "assertions": {
+                  "categories:performance": ["warn", { "minScore": 0.5 }],
+                  "categories:accessibility": ["warn", { "minScore": 0.8 }],
+                  "categories:best-practices": ["warn", { "minScore": 0.8 }],
+                  "categories:seo": ["warn", { "minScore": 0.8 }],
+                  "third-party-cookies": "off",
+                  "redirects": "off",
+                  "uses-passive-event-listeners": "off",
+                  "unused-javascript": "off",
+                  "legacy-javascript": "off"
+                }
+              },
+              "upload": {
+                "target": "temporary-public-storage"
               }
             }
           }
