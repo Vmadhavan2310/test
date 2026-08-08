@@ -29,7 +29,7 @@ jobs:
             "ci": {
               "collect": {
                 "url": [
-                  "https://www.sportstech.de"
+                  "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
                 ],
                 "numberOfRuns": 1
               },
