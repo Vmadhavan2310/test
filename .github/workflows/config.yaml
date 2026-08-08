@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Shopify_theme_push
     env: 
-      preview_url: "${{ SHOPIFY_FLAG_STORE }}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
+      preview_url: "$SHOPIFY_FLAG_STORE/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
     steps:
       - uses: actions/checkout@v4
 
