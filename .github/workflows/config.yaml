@@ -14,7 +14,7 @@ jobs:
   Shopify_theme_push: 
     runs-on: ubuntu-latest
     outputs:
-      preview_url: ${{ steps.create_theme.outputs.preview_url }}
+      current_theme_id: ${{ steps.create_theme.outputs.current_theme_id }}
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,13 +45,13 @@ jobs:
         run: |
           if [ "${{ steps.find_theme.outputs.theme_id }}" == "" ]; then
             echo "New theme Creates"
-            preview_url=$(shopify theme push --unpublished --theme "$THEME_NAME" --json | jq -r '.theme.preview_url') || exit 1
-            echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
+            current_theme_id=$(shopify theme push --unpublished --theme "$THEME_NAME" --json | jq -r '.theme.id') || exit 1
+            echo "current_theme_id=$current_theme_id" >> "$GITHUB_OUTPUT"
           else 
             echo "Pushing to existing theme"
-            preview_url=$(shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json | jq -r '.theme.preview_url') || exit 1
-            echo "test_url: $preview_url"
-            echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
+            current_theme_id=$(shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json | jq -r '.theme.id') || exit 1
+            echo "test_url: $current_theme_id"
+            echo "current_theme_id=$current_theme_id" >> "$GITHUB_OUTPUT"
           fi
 
   lighthouse:
@@ -64,6 +64,6 @@ jobs:
         with:
           node-version: 22
 
-      - run: echo "lighthouse tets ${{ needs.Shopify_theme_push.outputs.preview_url }}"
+      - run: echo "lighthouse tets ${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
 
 
