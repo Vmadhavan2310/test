@@ -1,4 +1,4 @@
-name: Shopify Theme Pipeline
+name: PR Validation
 
 on: 
   pull_request: 
@@ -7,8 +7,11 @@ on:
 env: 
   SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
   SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+  THEME_NAME: ${{ github.ref_name }}
+  COLLECTION_HANDLE: "sale"
+  PRODUCT_HANDLE: "stread-pro-laufband"
 
-jobs: 
+jobs:
   Prettier: 
     runs-on: ubuntu-latest
     steps: 
@@ -56,7 +59,72 @@ jobs:
 
       - name: Shopify theme Check
         run: npm run theme:check
- 
 
+  JSFileSize: 
+    needs: Theme_Check
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check JavaScript size
+        run: |
+          LIMIT=50000
+
+          find assets -name "*.js" | while read file; do
+            SIZE=$(wc -c < "$file")
+
+            echo "$file : $SIZE"
+
+            if [ "$SIZE" -gt "$LIMIT" ]; then
+              echo "$file exceeds ${LIMIT} bytes"
+              exit 1
+            fi
+          done
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: JSFileSize
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm ci
+      ## "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
+      - name: Create Lighthouse config
+        run: |
+          cat > .lighthouserc.json <<EOF
+          {
+            "ci": {
+              "collect": {
+                "url": [
+                  "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
+                  "https://${SHOPIFY_FLAG_STORE}/products/${PRODUCT_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
+                  "https://${SHOPIFY_FLAG_STORE}/collections/${COLLECTION_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
+                ],
+                "numberOfRuns": 1
+              },
+              "assert": {
+                "assertions": {
+                  "categories:performance": ["error", { "minScore": 0.2 }],
+                  "categories:accessibility": ["warn", { "minScore": 0.8 }],
+                  "categories:best-practices": ["warn", { "minScore": 0.8 }],
+                  "categories:seo": ["warn", { "minScore": 0.8 }]
+                }
+              },
+              "upload": {
+                "target": "temporary-public-storage"
+              }
+            }
+          }
+          EOF
+
+          jq empty .lighthouserc.json && echo "Valid JSON" || (echo "Invalid JSON"; cat .lighthouserc.json; exit 1)
+
+      - name: Run Lighthouse
+        run: npx lhci autorun
 
 
