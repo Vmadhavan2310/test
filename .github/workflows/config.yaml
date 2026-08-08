@@ -8,6 +8,8 @@ env:
   SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
   SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
   THEME_NAME: ${{ github.ref_name }}
+  COLLECTION_HANDLE: "sale"
+  PRODUCT_HANDLE: "stread-pro-laufband"
 
 jobs: 
 
@@ -71,7 +73,9 @@ jobs:
             "ci": {
               "collect": {
                 "url": [
-                  "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
+                  "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
+                  "https://${SHOPIFY_FLAG_STORE}/products/${PRODUCT_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
+                  "https://${SHOPIFY_FLAG_STORE}/collections/${COLLECTION_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
                 ],
                 "numberOfRuns": 1
               },
