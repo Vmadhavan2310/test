@@ -13,7 +13,6 @@ jobs:
 
   Shopify_theme_push: 
     runs-on: ubuntu-latest
-    needs: JSFileSize
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v4
