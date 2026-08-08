@@ -65,7 +65,7 @@ jobs:
           node-version: 22
 
       - run: npm ci
-
+      ## "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
       - name: Create Lighthouse config
         run: |
           cat > .lighthouserc.json <<EOF
@@ -73,7 +73,9 @@ jobs:
             "ci": {
               "collect": {
                 "url": [
-                  "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
+                  "https://www.sportstech.de/?preview_theme_id=204340461910",
+                  "https://www.sportstech.de/products/stread-pro-laufband?preview_theme_id=204340461910",
+                  "https://www.sportstech.de/collections/sale?preview_theme_id=204340461910"
                 ],
                 "numberOfRuns": 3
               }
