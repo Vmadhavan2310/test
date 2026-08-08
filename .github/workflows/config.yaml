@@ -142,9 +142,9 @@ jobs:
             "ci": {
               "collect": {
                 "url": [
-                  "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
-                  "https://${SHOPIFY_FLAG_STORE}/products/${PRODUCT_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
-                  "https://${SHOPIFY_FLAG_STORE}/collections/${COLLECTION_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
+                  "https://www.sportstech.de/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
+                  "https://www.sportstech.de/products/${PRODUCT_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
+                  "https://www.sportstech.de/collections/${COLLECTION_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
                 ],
                 "numberOfRuns": 1
               },
@@ -153,7 +153,20 @@ jobs:
                   "categories:performance": ["error", { "minScore": 0.2 }],
                   "categories:accessibility": ["warn", { "minScore": 0.8 }],
                   "categories:best-practices": ["warn", { "minScore": 0.8 }],
-                  "categories:seo": ["warn", { "minScore": 0.8 }]
+                  "categories:seo": ["warn", { "minScore": 0.8 }],
+
+                  "first-contentful-paint": ["warn", { "maxNumericValue": 3000 }],
+                  "largest-contentful-paint": ["warn", { "maxNumericValue": 4000 }],
+                  "speed-index": ["warn", { "maxNumericValue": 5000 }],
+                  "interactive": ["warn", { "maxNumericValue": 6000 }],
+                  "max-potential-fid": ["warn", { "maxNumericValue": 300 }],
+                  "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.25 }],
+                  "total-byte-weight": ["warn", { "maxNumericValue": 3000000 }],
+
+                  "unminified-javascript": ["warn", { "maxLength": 10 }],
+                  "unused-javascript": ["warn", { "maxLength": 10 }],
+                  "offscreen-images": ["warn", { "maxLength": 5 }],
+                  "uses-responsive-images": ["warn", { "maxLength": 10 }]
                 }
               },
               "upload": {
