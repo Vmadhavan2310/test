@@ -59,6 +59,6 @@ jobs:
         with:
           node-version: 22
 
-      - run: echo "lighthouse tets"
+      - run: echo "lighthouse tets ${{ needs.Shopify_theme_push.outputs.new_theme_id }}"
 
 
