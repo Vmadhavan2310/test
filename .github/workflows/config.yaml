@@ -11,49 +11,6 @@ env:
 
 jobs: 
 
-  Shopify_theme_push: 
-    runs-on: ubuntu-latest
-    outputs:
-      current_theme_id: ${{ steps.create_theme.outputs.current_theme_id }}
-    steps: 
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install Shopify CLI
-        run: npm install -g @shopify/cli @shopify/theme 
-
-      - name: Find theme ID by name
-        id: find_theme
-        run: |
-          THEME_ID=$(shopify theme list --json \
-            | jq -r --arg NAME "$THEME_NAME" '.[] | select(.name==$NAME) | .id' \
-          )
-
-          if [ -z "$THEME_ID" ] || [ "$THEME_ID" = "null" ]; then
-            echo "Theme not found"
-            echo "theme_id=" >> "$GITHUB_OUTPUT"
-          else
-            echo "Theme found: $THEME_ID"
-            echo "theme_id=$THEME_ID" >> "$GITHUB_OUTPUT"
-          fi
-
-          echo "Found theme id: $THEME_ID"
-          echo "theme_id=$THEME_ID" >> "$GITHUB_OUTPUT"         
-
-      - name: Create Preview Theme
-        id: create_theme
-        run: |
-          if [ "${{ steps.find_theme.outputs.theme_id }}" == "" ]; then
-            echo "New theme Creates"
-            current_theme_id=$(shopify theme push --unpublished --theme "$THEME_NAME" --json | jq -r '.theme.id') || exit 1
-            echo "current_theme_id=$current_theme_id" >> "$GITHUB_OUTPUT"
-          else 
-            echo "Pushing to existing theme"
-            current_theme_id=$(shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json | jq -r '.theme.id') || exit 1
-            echo "test_url: $current_theme_id"
-            echo "current_theme_id=$current_theme_id" >> "$GITHUB_OUTPUT"
-          fi
-
   lighthouse:
     runs-on: ubuntu-latest
     needs: Shopify_theme_push
@@ -73,7 +30,7 @@ jobs:
             "ci": {
               "collect": {
                 "url": [
-                  "https://www.sportstech.de",
+                  "https://www.sportstech.de"
                 ],
                 "numberOfRuns": 3
               },
