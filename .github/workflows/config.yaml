@@ -13,6 +13,8 @@ jobs:
 
   Shopify_theme_push: 
     runs-on: ubuntu-latest
+    outputs:
+      new_theme_id: ${{ steps.create_theme.outputs.new_theme_id }}
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -61,6 +63,6 @@ jobs:
         with:
           node-version: 22
 
-      - run: echo "lighthouse tets ${{ needs.create_theme.outputs.new_theme_id }}"
+      - run: echo "lighthouse tets ${{ needs.Shopify_theme_push.outputs.new_theme_id }}"
 
 
