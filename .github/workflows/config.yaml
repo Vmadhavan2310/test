@@ -64,6 +64,6 @@ jobs:
           node-version: 22
 
       - name: Run Lighthouse Audit
-      - run: echo "url:${{ secrets.SHOPIFY_STORE }}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
+      - run: echo "url:${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
 
 
