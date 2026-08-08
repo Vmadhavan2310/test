@@ -67,8 +67,6 @@ jobs:
       - run: npm ci
       ## "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
       - name: Create Lighthouse config
-        env:
-          PREVIEW_THEME_ID: ${{ steps.theme_push.outputs.theme_id }}
         run: |
           cat > .lighthouserc.json <<EOF
           {
