@@ -49,9 +49,7 @@ jobs:
             echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
           else 
             echo "Pushing to existing theme"
-            shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json || exit 1
-            preview_url=${{ steps.find_theme.outputs.theme_id }}
-            echo "existing_theme:${{ steps.find_theme.outputs.theme_id }}"
+            preview_url=$(shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json | jq '.theme.preview_url') || exit 1)
             echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
           fi
 
