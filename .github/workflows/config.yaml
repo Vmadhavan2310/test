@@ -52,6 +52,7 @@ jobs:
             shopify theme push --theme ${{ steps.find_theme.outputs.theme_id }} --json || exit 1
             current_theme_id=${{ steps.find_theme.outputs.theme_id }}
             echo "existing_theme:${{ steps.find_theme.outputs.theme_id }}"
+            echo "current_theme_id=$current_theme_id" >> "$GITHUB_OUTPUT"
           fi
 
   lighthouse:
