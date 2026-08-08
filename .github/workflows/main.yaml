@@ -101,9 +101,9 @@ jobs:
             "ci": {
               "collect": {
                 "url": [
-                  "https://${SHOPIFY_FLAG_STORE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
-                  "https://${SHOPIFY_FLAG_STORE}/products/${PRODUCT_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
-                  "https://${SHOPIFY_FLAG_STORE}/collections/${COLLECTION_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
+                  "https://www.sportstech.de/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
+                  "https://www.sportstech.de/products/${PRODUCT_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}",
+                  "https://www.sportstech.de/collections/${COLLECTION_HANDLE}/?preview_theme_id=${{ needs.Shopify_theme_push.outputs.current_theme_id }}"
                 ],
                 "numberOfRuns": 1
               },
